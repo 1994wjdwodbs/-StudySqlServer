@@ -1,1 +1,1 @@
-# -StudySqlServer
+# StudySqlServer
