@@ -1,1 +1,1 @@
-SELECT * FROM memberTbl, productTBL;
+SELECT * FROM memberTbl, productTBL; 
