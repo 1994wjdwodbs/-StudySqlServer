@@ -90,7 +90,7 @@ SELECT num, groupName, SUM(price * amount) as '구매금액', GROUPING_ID(groupName,
 GROUP BY ROLLUP(groupName, num);
 -- ORDER BY groupName;
 
--- EX)
+-- Ex)
 SELECT userID, SUM(price * amount) AS '구매금액' FROM buyTbl
 GROUP BY (userID);
 SELECT groupName, SUM(price * amount) AS '구매금액' FROM buyTbl
@@ -106,3 +106,18 @@ GROUP BY ROLLUP(groupName, userID);
 -- CUBE
 SELECT userID, groupName, SUM(price * amount) AS '구매금액' FROM buyTbl
 GROUP BY CUBE(groupName, userID);
+
+
+-- CTE(COMMON TABLE EXPRESSION)
+-- 기존의 뷰, 파생 테이블, 임시 테이블 등으로 사용되던 것을 대신할 수 있다.
+-- Ex 2)
+SELECT userID, sum(price * amount) AS 'total' FROM buyTbl
+GROUP BY userID ORDER BY 'total' DESC;
+-- CTE Ver
+WITH cte_tmp(userID, total)
+AS
+(
+	SELECT userID, sum(price * amount) AS 'total' FROM buyTbl
+	GROUP BY userID
+)
+SELECT * FROM cte_tmp ORDER BY 'total' DESC;
