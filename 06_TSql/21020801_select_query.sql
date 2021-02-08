@@ -66,3 +66,43 @@ WHERE height = (SELECT MAX(height) FROM userTbl)
 SELECT COUNT(*) FROM userTbl;
 SELECT COUNT(*) FROM buyTbl;
 SELECT COUNT(mobile1) AS '핸드폰 보유자' FROM userTbl;
+
+-- HAVING
+-- 잘못된 방법(집계 함수는 WHERE 조건문에 들어갈 수 없다!)
+SELECT userID, SUM(price * amount) AS '전체 구매금액' FROM buyTbl 
+WHERE sum(price * amount) > 1000
+GROUP BY userID;
+-- 정상적인 방법
+SELECT userID, SUM(price * amount) AS '전체 구매금액' FROM buyTbl 
+GROUP BY userID
+HAVING SUM(price * amount) > 1000
+ORDER BY SUM(price * amount) DESC;
+
+-- ROLLUP
+SELECT num, groupName, SUM(price * amount) as '구매금액' FROM buyTbl
+GROUP BY num, groupName;
+SELECT num, groupName, SUM(price * amount) as '구매금액' FROM buyTbl
+GROUP BY ROLLUP(groupName, num)
+ORDER BY groupName;
+
+-- GROUPING_ID(0:데이터, 1:합계를 위해 추가된 열)
+SELECT num, groupName, SUM(price * amount) as '구매금액', GROUPING_ID(groupName, num) AS ID FROM buyTbl
+GROUP BY ROLLUP(groupName, num);
+-- ORDER BY groupName;
+
+-- EX)
+SELECT userID, SUM(price * amount) AS '구매금액' FROM buyTbl
+GROUP BY (userID);
+SELECT groupName, SUM(price * amount) AS '구매금액' FROM buyTbl
+GROUP BY (groupName);
+SELECT userID, SUM(price * amount) AS '구매금액' FROM buyTbl
+GROUP BY ROLLUP(userID); -- 중간합계(NULL)을 만들어준다.
+SELECT groupName, SUM(price * amount) AS '구매금액' FROM buyTbl
+GROUP BY ROLLUP(groupName); -- 중간합계(NULL)을 만들어준다.
+
+-- ROLLUP vs CUBE
+SELECT userID, groupName, SUM(price * amount) AS '구매금액' FROM buyTbl
+GROUP BY ROLLUP(groupName, userID);
+-- CUBE
+SELECT userID, groupName, SUM(price * amount) AS '구매금액' FROM buyTbl
+GROUP BY CUBE(groupName, userID);
