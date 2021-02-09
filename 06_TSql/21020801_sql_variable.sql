@@ -1,15 +1,20 @@
 use sqlDB;
 go
 
-declare @myVar1 int;
-declare @myVar2 smallint, @myVar3 decimal(5, 2);
-declare @myVar4 char(20);
+DECLARE @myVar1 int;
+DECLARE @myVar2 smallint, @myVar3 decimal(3, 2);
+DECLARE @myVar4 char(20);
 
-set @myVar1 = 154234521;
-set @myVar2 = 32767;
-set @myVar3 = 3.14;
-set @myVar4 = '가수 이름==>    ';
+SET @myVar1 = 154234521;
+SET @myVar2 = 32767;
+SET @myVar3 = 3.14;
+SET @myVar4 = '가수 이름==>';
 
-select @myVar1;
-select @myVar2 + @myVar3;
-select @myVar4, userName from userTbl where height > 180;
+SELECT @myVar1;
+SELECT @myVar2;
+SELECT @myVar3 + @myVar2;
+SELECT @myVar4 AS '임시', userName FROM userTbl WHERE height > 180;
+
+DECLARE @myVar5 tinyint;
+SET @myVar5 = 3;
+SELECT TOP(@myVar5) userName, height FROM userTbl ORDER BY height DESC;
