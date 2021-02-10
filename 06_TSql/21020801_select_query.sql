@@ -100,6 +100,8 @@ GROUP BY ROLLUP(userID); -- 중간합계(NULL)을 만들어준다.
 SELECT groupName, SUM(price * amount) AS '구매금액' FROM buyTbl
 GROUP BY ROLLUP(groupName); -- 중간합계(NULL)을 만들어준다.
 
+SELECT addr, MAX(userTbl.height) FROM userTbl GROUP BY (userTbl.addr);
+
 -- ROLLUP vs CUBE
 SELECT userID, groupName, SUM(price * amount) AS '구매금액' FROM buyTbl
 GROUP BY ROLLUP(groupName, userID);
