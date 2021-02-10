@@ -7,7 +7,7 @@ DROP TABLE testTbl;
 
 -- 주의사항 2
 USE tempdb;
-go
+go 
 
 DROP database tabledb;
 go

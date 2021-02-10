@@ -7,4 +7,4 @@ INSERT INTO #tempTbl VALUES(1, '지역임시테이블');
 INSERT INTO ##tempTbl VALUES(2, '전역임시테이블');
 
 SELECT * FROM #tempTbl;
-SELECT * FROM ##tempTbl;
+SELECT * FROM ##tempTbl; 
