@@ -44,9 +44,19 @@ SELECT  b.bookIdx
 
 -- 대여된 책의 정보 쿼리 조인
 SELECT  r.rentalIdx 
-      , r.memberIdx 
-      , r.bookIdx 
-      , r.rentalDt 
-      , r.returnDt 
-      , r.rentalState 
-  FROM  dbo.rentalTBL AS r;
+      , m.memberName 
+      --, r.bookIdx 
+	  , b.bookName
+	  , b.author
+	  , FORMAT(r.rentalDt, 'yyyy-MM-dd') AS '대여일'
+	  , FORMAT(r.returnDt, 'yyyy-MM-dd') AS '반납일'
+	  , dbo.ufn_getState(r.rentalState) AS '대여상태'
+  FROM  dbo.rentalTBL AS r
+  JOIN booksTBL AS b ON (r.bookIdx = b.bookIdx)
+  RIGHT JOIN memberTBL As m ON (r.memberIdx = m.memberIdx)
+  WHERE rentalIdx IS NULL;
+
+  -- 우리 책 대여점에 없는 소설 장르
+  SELECT c.cateIdx, c.cateName, b.bookName
+  FROM cateTBL AS c
+  LEFT JOIN booksTBL AS b ON (c.cateIdx = b.cateIdx);
