@@ -16,4 +16,5 @@ FROM userTbl AS u
 JOIN buyTbl AS b ON (u.userID = b.userID)
 WHERE u.height > 170
 FOR JSON AUTO;
+-- FOR XML AUTO;
 -- XML --
