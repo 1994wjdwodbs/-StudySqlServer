@@ -1,6 +1,7 @@
 
+use bookrentalshop;
 -- 1-1
-SELECT email, mobile, names, addr
+SELECT LOWER(email), mobile, names, addr
 FROM membertbl;
 
 -- 1-2
@@ -49,7 +50,6 @@ LEFT JOIN rentaltbl AS r ON (m.Idx = r.memberIdx)
 WHERE r.rentalDate IS NULL;
 
 -- 4-1
-BEGIN TRAN;
 INSERT INTO divtbl
 (Division, Names)
 VALUES
